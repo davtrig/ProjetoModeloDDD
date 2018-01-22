@@ -8,5 +8,6 @@ namespace ProjetoModeloDDD.Infra.Data.Context
 {
     public class ProjetoModeloContext :DbContext
     {
+
     }
 }
