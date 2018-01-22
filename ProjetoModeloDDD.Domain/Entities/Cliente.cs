@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace ProjetoModeloDDD.Domain.Entities
         public string Email { get; set; }
         public DateTime DataCadastro { get; set; }
         public bool Activo { get; set; }
+        public virtual IEnumerable<Produto> Produtos { get; set; }
 
         public bool ClienteEspecial(Cliente cliente)
         {
