@@ -19,9 +19,9 @@ namespace ProjetoModeloDDD.Domain.Services
             _clienteRepository = clienteRepository;
         }
 
-        public IEnumerable<Cliente> ObterClientesEspeciais(IEnumerable<Cliente> cliente)
+        public IEnumerable<Cliente> ObterClientesEspeciais(IEnumerable<Cliente> clientes)
         {
-            throw new NotImplementedException();
+            return clientes.Where(c => c.ClienteEspecial(c));
         }
     }
 }
