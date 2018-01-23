@@ -8,7 +8,7 @@ using ProjetoModeloDDD.Domain.Entities;
 
 namespace ProjetoModeloDDD.Infra.Data.EntityConfig
 {
-    public class ProdutoConfiguration :EntityTypeConfiguration<Produto>
+    public class ProdutoConfiguration : EntityTypeConfiguration<Produto>
     {
         public ProdutoConfiguration()
         {
