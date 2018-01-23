@@ -33,6 +33,7 @@
     <Compile Include="Entities\Cliente.cs" />
     <Compile Include="Entities\Produto.cs" />
     <Compile Include="Interfaces\Repositories\IClienteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
