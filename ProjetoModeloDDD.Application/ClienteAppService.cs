@@ -11,9 +11,9 @@ namespace ProjetoModeloDDD.Application
 {
     public class ClienteAppService : AppServiceBase<Cliente>, IClienteAppService
     {
-        private readonly IClienteAppService _clienteService;
+        private readonly IClienteService _clienteService;
     
-        public ClienteAppService(IClienteAppService clienteService)
+        public ClienteAppService(IClienteService clienteService)
             : base(clienteService)
         {
             _clienteService = clienteService;
