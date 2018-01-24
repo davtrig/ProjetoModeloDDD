@@ -5,26 +5,35 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using ProjetoModeloDDD.Application.Interface;
 using ProjetoModeloDDD.Domain.Entities;
-using ProjetoModeloDDD.Infra.Data.Repositories;
 using ProjetoModeloDDD.MVC.ViewModels;
 
 namespace ProjetoModeloDDD.MVC.Controllers
 {
     public class ProdutosController : Controller
     {
-        private readonly ProdutoRepository _produtoRepository = new ProdutoRepository();
+        private readonly IProdutoAppService _produtoApp;
+
+        public ProdutosController(IProdutoAppService produtoApp)
+        {
+            _produtoApp = produtoApp;
+        }
+
         // GET: Produto
         public ActionResult Index()
         {
-            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoRepository.GetAll());
+            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoApp.GetAll());
             return View(produtoViewModel);
         }
 
         // GET: Produto/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var produto = _produtoApp.GetById(id);
+            var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
+
+            return View(produtoViewModel);
         }
 
         // GET: Produto/Create
@@ -41,7 +50,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var produtoDomain = Mapper.Map<ProdutoViewModel, Produto>(produto);
-                _produtoRepository.Add(produtoDomain);
+                _produtoApp.Add(produtoDomain);
 
                 return RedirectToAction("Index");
             }
@@ -52,45 +61,46 @@ namespace ProjetoModeloDDD.MVC.Controllers
         // GET: Produto/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var produto = _produtoApp.GetById(id);
+            var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
+
+            return View(produtoViewModel);
         }
 
         // POST: Produto/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ProdutoViewModel produto)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                var produtoDomain = Mapper.Map<ProdutoViewModel, Produto>(produto);
+                _produtoApp.Update(produtoDomain);
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(produto);
         }
 
         // GET: Produto/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var produto = _produtoApp.GetById(id);
+            var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
+
+            return View(produtoViewModel);
         }
 
         // POST: Produto/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var produto = _produtoApp.GetById(id);
+            _produtoApp.Remove(produto);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }
