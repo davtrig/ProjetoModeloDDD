@@ -14,10 +14,16 @@ namespace ProjetoModeloDDD.MVC.Controllers
     public class ProdutosController : Controller
     {
         private readonly IProdutoAppService _produtoApp;
+        private readonly IClienteAppService _clienteApp;
 
-        public ProdutosController(IProdutoAppService produtoApp)
+        public ProdutosController()
+        {
+        }
+
+        public ProdutosController(IProdutoAppService produtoApp, IClienteAppService clienteApp)
         {
             _produtoApp = produtoApp;
+            _clienteApp = clienteApp;
         }
 
         // GET: Produto
@@ -39,6 +45,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
         // GET: Produto/Create
         public ActionResult Create()
         {
+            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome");
             return View();
         }
 
@@ -55,6 +62,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", produto.ClienteId);
             return View(produto);
         }
 
@@ -63,6 +71,8 @@ namespace ProjetoModeloDDD.MVC.Controllers
         {
             var produto = _produtoApp.GetById(id);
             var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
+
+            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", produtoViewModel.ClienteId);
 
             return View(produtoViewModel);
         }
@@ -80,6 +90,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", produto.ClienteId);
             return View(produto);
         }
 

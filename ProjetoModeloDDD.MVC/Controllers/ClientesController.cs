@@ -17,6 +17,11 @@ namespace ProjetoModeloDDD.MVC.Controllers
     {
         private readonly IClienteAppService _clienteApp;
 
+        public ClientesController()
+        {
+
+        }
+
         public ClientesController(IClienteAppService clienteApp)
         {
             _clienteApp = clienteApp;
