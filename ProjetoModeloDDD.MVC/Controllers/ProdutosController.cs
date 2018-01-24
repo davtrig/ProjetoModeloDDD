@@ -18,6 +18,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
 
         public ProdutosController()
         {
+
         }
 
         public ProdutosController(IProdutoAppService produtoApp, IClienteAppService clienteApp)
@@ -29,7 +30,8 @@ namespace ProjetoModeloDDD.MVC.Controllers
         // GET: Produto
         public ActionResult Index()
         {
-            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoApp.GetAll());
+            var produto = _produtoApp.GetAll();
+            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(produto);
             return View(produtoViewModel);
         }
 

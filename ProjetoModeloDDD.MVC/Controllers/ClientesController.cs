@@ -26,11 +26,13 @@ namespace ProjetoModeloDDD.MVC.Controllers
         {
             _clienteApp = clienteApp;
         }
-
+        
         // GET: Clientes
         public ActionResult Index()
         {
-            var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteApp.GetAll());
+             if (_clienteApp == null) return View();
+            var cliente = _clienteApp.GetAll();
+            var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(cliente);
             return View(clienteViewModel);
         }
 
