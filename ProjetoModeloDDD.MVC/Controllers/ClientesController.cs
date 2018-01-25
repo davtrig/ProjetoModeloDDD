@@ -17,11 +17,6 @@ namespace ProjetoModeloDDD.MVC.Controllers
     {
         private readonly IClienteAppService _clienteApp;
 
-        public ClientesController()
-        {
-
-        }
-
         public ClientesController(IClienteAppService clienteApp)
         {
             _clienteApp = clienteApp;
@@ -30,7 +25,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-             if (_clienteApp == null) return View();
+            if (_clienteApp == null) return View();
             var cliente = _clienteApp.GetAll();
             var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(cliente);
             return View(clienteViewModel);

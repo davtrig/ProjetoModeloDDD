@@ -7,45 +7,61 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Valor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Disponivel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClienteId)
-        </th>
-        <th></th>
-    </tr>
+<p>
+    @*@using (Html.BeginForm("Index", "Produtos", FormMethod.Post))*@
+    @using (Ajax.BeginForm("Index", "Produtos", new AjaxOptions {HttpMethod = "POST", UpdateTargetId = "tableDiv"}))
+    {
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Valor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Disponivel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClienteId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProdutoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProdutoId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProdutoId })
-        </td>
-    </tr>
-}
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.TextBox("nome")
+                <input type="submit" value="Search" class="btn btn-default"/>
+            </div>
+        </div>
+    }
+</p>
+<div id="tableDiv">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disponivel)
+            </th>
+            <th>
+                @Html.DisplayName("Cliente")
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disponivel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProdutoId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ProdutoId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProdutoId })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -16,11 +16,6 @@ namespace ProjetoModeloDDD.MVC.Controllers
         private readonly IProdutoAppService _produtoApp;
         private readonly IClienteAppService _clienteApp;
 
-        public ProdutosController()
-        {
-
-        }
-
         public ProdutosController(IProdutoAppService produtoApp, IClienteAppService clienteApp)
         {
             _produtoApp = produtoApp;
@@ -31,6 +26,14 @@ namespace ProjetoModeloDDD.MVC.Controllers
         public ActionResult Index()
         {
             var produto = _produtoApp.GetAll();
+            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(produto);
+            return View(produtoViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string nome)
+        {
+            var produto = _produtoApp.BuscarPorNome(nome);
             var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(produto);
             return View(produtoViewModel);
         }
